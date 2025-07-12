@@ -1,0 +1,30 @@
+{
+  "name": "odoo",
+  "version": "1.0.0",
+  "description": "Problem Statement 2:-   \r StackIt – A Minimal Q&A Forum Platform",
+  "homepage": "https://github.com/ER-DHRUV/odoo_project#readme",
+  "bugs": {
+    "url": "https://github.com/ER-DHRUV/odoo_project/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ER-DHRUV/odoo_project.git"
+  },
+  "license": "ISC",
+  "author": "Dhruv",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "connect-flash": "^0.1.1",
+    "ejs-mate": "^4.0.0",
+    "express": "^5.1.0",
+    "express-session": "^1.18.1",
+    "method-override": "^3.0.0",
+    "mongoose": "^8.16.3",
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0"
+  }
+}
