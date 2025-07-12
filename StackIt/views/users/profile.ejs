@@ -1,0 +1,74 @@
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <div class="mb-3">
+                    <i class="bi bi-person-circle display-1 text-primary"></i>
+                </div>
+                <h4><%= user.username %></h4>
+                <p class="text-muted">Member since <%= new Date(user.joinDate).toLocaleDateString() %></p>
+                
+                <div class="reputation-badge mb-3">
+                    <span class="badge bg-secondary fs-6">
+                        <i class="bi bi-star"></i> <%= user.reputation %> reputation
+                    </span>
+                </div>
+                
+                <% if (user.bio) { %>
+                    <div class="bio mb-3">
+                        <p class="text-muted"><%= user.bio %></p>
+                    </div>
+                <% } %>
+                
+                <% if (currentUser && currentUser.id === user._id.toString()) { %>
+                    <a href="/users/profile/<%= user._id %>/edit" class="btn btn-primary">
+                        <i class="bi bi-pencil"></i> Edit Profile
+                    </a>
+                <% } %>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-activity"></i> Activity</h5>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-md-4">
+                        <div class="activity-stat">
+                            <h3 class="text-primary">0</h3>
+                            <p class="text-muted">Questions</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="activity-stat">
+                            <h3 class="text-success">0</h3>
+                            <p class="text-muted">Answers</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="activity-stat">
+                            <h3 class="text-warning">0</h3>
+                            <p class="text-muted">Accepted</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Recent Activity Placeholder -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-clock-history"></i> Recent Activity</h5>
+            </div>
+            <div class="card-body">
+                <div class="text-center text-muted py-4">
+                    <i class="bi bi-clock display-4"></i>
+                    <p class="mt-3">No recent activity</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

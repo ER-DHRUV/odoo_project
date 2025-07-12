@@ -1,0 +1,41 @@
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="mb-0"><i class="bi bi-pencil"></i> Edit Question</h3>
+            </div>
+            <div class="card-body">
+                <form action="/questions/<%= question._id %>?_method=PUT" method="POST">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" class="form-control" id="title" name="title" required
+                               value="<%= question.title %>"
+                               placeholder="What's your question? Be specific.">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="content" class="form-label">Details</label>
+                        <textarea class="form-control" id="content" name="content" rows="10" required
+                                  placeholder="Provide all the information someone would need to answer your question."><%= question.content %></textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="tags" class="form-label">Tags</label>
+                        <input type="text" class="form-control" id="tags" name="tags"
+                               value="<%= question.tags.join(', ') %>"
+                               placeholder="javascript, nodejs, express (comma separated)">
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a href="/questions/<%= question._id %>" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check"></i> Update Question
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div> 

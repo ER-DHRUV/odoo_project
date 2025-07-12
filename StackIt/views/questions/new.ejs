@@ -1,0 +1,69 @@
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="mb-0"><i class="bi bi-plus-circle"></i> Ask a Question</h3>
+            </div>
+            <div class="card-body">
+                <form action="/questions" method="POST">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" class="form-control" id="title" name="title" required
+                               placeholder="What's your question? Be specific.">
+                        <div class="form-text">Keep it clear and concise. A good title helps others find your question.</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="content" class="form-label">Details</label>
+                        <textarea class="form-control" id="content" name="content" rows="10" required
+                                  placeholder="Provide all the information someone would need to answer your question. Include any relevant code, error messages, or context."></textarea>
+                        <div class="form-text">The more details you provide, the better answers you'll get.</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="tags" class="form-label">Tags</label>
+                        <input type="text" class="form-control" id="tags" name="tags"
+                               placeholder="javascript, nodejs, express (comma separated)">
+                        <div class="form-text">Add up to 5 tags to help categorize your question.</div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between">
+                        <a href="/questions" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left"></i> Cancel
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-send"></i> Post Question
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Tips Card -->
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-lightbulb"></i> Writing a Good Question</h5>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled mb-0">
+                    <li class="mb-2">
+                        <i class="bi bi-check-circle text-success me-2"></i>
+                        <strong>Be specific:</strong> Include relevant details and context
+                    </li>
+                    <li class="mb-2">
+                        <i class="bi bi-check-circle text-success me-2"></i>
+                        <strong>Show your work:</strong> Include code, error messages, or steps you've tried
+                    </li>
+                    <li class="mb-2">
+                        <i class="bi bi-check-circle text-success me-2"></i>
+                        <strong>Use clear language:</strong> Write in a way that others can understand
+                    </li>
+                    <li class="mb-2">
+                        <i class="bi bi-check-circle text-success me-2"></i>
+                        <strong>Add relevant tags:</strong> Help others find and answer your question
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div> 

@@ -1,0 +1,168 @@
+<%- include('../partials/header') %>
+
+<div class="row">
+    <!-- Sidebar -->
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="bi bi-funnel"></i> Filter & Sort</h5>
+            </div>
+            <div class="card-body">
+                <form action="/questions" method="GET">
+                    <% if (search) { %>
+                        <input type="hidden" name="search" value="<%= search %>">
+                    <% } %>
+                    
+                    <div class="mb-3">
+                        <label for="sort" class="form-label">Sort by:</label>
+                        <select class="form-select" id="sort" name="sort" onchange="this.form.submit()">
+                            <option value="newest" <%= sort === 'newest' ? 'selected' : '' %>>Newest</option>
+                            <option value="oldest" <%= sort === 'oldest' ? 'selected' : '' %>>Oldest</option>
+                            <option value="votes" <%= sort === 'votes' ? 'selected' : '' %>>Most Voted</option>
+                            <option value="views" <%= sort === 'views' ? 'selected' : '' %>>Most Viewed</option>
+                            <option value="unanswered" <%= sort === 'unanswered' ? 'selected' : '' %>>Unanswered</option>
+                        </select>
+                    </div>
+                    
+                    <% if (tag) { %>
+                        <div class="mb-3">
+                            <label class="form-label">Current tag:</label>
+                            <div class="d-flex align-items-center">
+                                <span class="badge bg-primary me-2"><%= tag %></span>
+                                <a href="/questions<%= search ? '?search=' + search : '' %>" class="btn btn-sm btn-outline-secondary">
+                                    <i class="bi bi-x"></i>
+                                </a>
+                            </div>
+                        </div>
+                    <% } %>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="col-md-9">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>
+                <% if (search) { %>
+                    Search Results for "<%= search %>"
+                <% } else if (tag) { %>
+                    Questions tagged "<%= tag %>"
+                <% } else if (sort === 'unanswered') { %>
+                    Unanswered Questions
+                <% } else { %>
+                    All Questions
+                <% } %>
+            </h2>
+            <% if (currentUser) { %>
+                <a href="/questions/new" class="btn btn-primary">
+                    <i class="bi bi-plus-circle"></i> Ask Question
+                </a>
+            <% } %>
+        </div>
+
+        <% if (questions.length === 0) { %>
+            <div class="text-center py-5">
+                <i class="bi bi-question-circle display-1 text-muted"></i>
+                <h3 class="mt-3">No questions found</h3>
+                <p class="text-muted">
+                    <% if (search) { %>
+                        No questions match your search criteria.
+                    <% } else if (tag) { %>
+                        No questions found with this tag.
+                    <% } else if (sort === 'unanswered') { %>
+                        All questions have been answered!
+                    <% } else { %>
+                        Be the first to ask a question!
+                    <% } %>
+                </p>
+                <% if (currentUser) { %>
+                    <a href="/questions/new" class="btn btn-primary">
+                        <i class="bi bi-plus-circle"></i> Ask the First Question
+                    </a>
+                <% } %>
+            </div>
+        <% } else { %>
+            <!-- Questions List -->
+            <div class="questions-list">
+                <% questions.forEach(question => { %>
+                    <div class="card mb-3 question-card">
+                        <div class="card-body">
+                            <div class="row">
+                                <!-- Vote Stats -->
+                                <div class="col-md-2 text-center">
+                                    <div class="vote-stats">
+                                        <div class="vote-count <%= question.voteCount > 0 ? 'text-success' : question.voteCount < 0 ? 'text-danger' : 'text-muted' %>">
+                                            <i class="bi bi-arrow-up-circle"></i>
+                                            <span class="fw-bold"><%= question.voteCount %></span>
+                                        </div>
+                                        <div class="vote-label text-muted small">votes</div>
+                                    </div>
+                                    <div class="answer-stats mt-2">
+                                        <div class="answer-count <%= question.answerCount > 0 ? 'text-success' : 'text-muted' %>">
+                                            <i class="bi bi-chat-dots"></i>
+                                            <span class="fw-bold"><%= question.answerCount %></span>
+                                        </div>
+                                        <div class="answer-label text-muted small">answers</div>
+                                    </div>
+                                    <div class="view-stats mt-2">
+                                        <div class="view-count text-muted">
+                                            <i class="bi bi-eye"></i>
+                                            <span class="fw-bold"><%= question.views %></span>
+                                        </div>
+                                        <div class="view-label text-muted small">views</div>
+                                    </div>
+                                </div>
+
+                                <!-- Question Content -->
+                                <div class="col-md-10">
+                                    <div class="question-header">
+                                        <h5 class="card-title">
+                                            <a href="/questions/<%= question._id %>" class="text-decoration-none">
+                                                <%= question.title %>
+                                            </a>
+                                            <% if (question.isAnswered) { %>
+                                                <span class="badge bg-success ms-2">
+                                                    <i class="bi bi-check-circle"></i> Answered
+                                                </span>
+                                            <% } %>
+                                        </h5>
+                                    </div>
+                                    
+                                    <div class="question-content text-muted mb-3">
+                                        <%= question.content.length > 200 ? question.content.substring(0, 200) + '...' : question.content %>
+                                    </div>
+                                    
+                                    <div class="question-footer d-flex justify-content-between align-items-center">
+                                        <div class="tags">
+                                            <% question.tags.forEach(tag => { %>
+                                                <a href="/questions?tag=<%= tag %>" class="badge bg-light text-dark text-decoration-none me-1">
+                                                    <%= tag %>
+                                                </a>
+                                            <% }) %>
+                                        </div>
+                                        
+                                        <div class="question-meta text-muted small">
+                                            <span>
+                                                <i class="bi bi-person"></i>
+                                                <a href="/users/profile/<%= question.author._id %>" class="text-decoration-none">
+                                                    <%= question.author.username %>
+                                                </a>
+                                            </span>
+                                            <span class="ms-2">
+                                                <i class="bi bi-clock"></i>
+                                                <%= new Date(question.createdAt).toLocaleDateString() %>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        <% } %>
+    </div>
+</div>
+
+<%- include('../partials/footer') %> 
